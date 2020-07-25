@@ -1,5 +1,10 @@
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.security.MessageDigest;
+import org.apache.commons.codec.binary.Hex;
 
 
 public class PasswordHardcoded {
@@ -20,12 +25,14 @@ public class PasswordHardcoded {
         return instance;
     }
 
-    public void addCredentials(String username, String password){
+    public void addCredentials(String username, String password) throws NoSuchAlgorithmException {
         if (passwords.containsKey(username)){
             throw new IllegalStateException("Username already exists");
         }
         else {
-            passwords.put(username, password);
+            byte[] passwordBytes = password.getBytes(StandardCharsets.UTF_8);
+            MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
+            passwords.put(username, new String(Hex.encodeHex(sha256.digest(passwordBytes))));
         }
     }
 
@@ -46,5 +53,9 @@ public class PasswordHardcoded {
 
     private boolean isValidCredentials(String username, String password){
         return passwords.containsKey(username) && passwords.get(username).equals(password);
+    }
+
+    public void printCredentials(){
+        System.out.println(passwords.toString());
     }
 }
