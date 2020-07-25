@@ -9,5 +9,6 @@ public class Main {
         passwordHardcoded.addCredentials("user1", "steveslist");
 
         passwordHardcoded.printCredentials();
+        passwordHardcoded.getCredentials();
     }
 }
