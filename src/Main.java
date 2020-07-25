@@ -1,6 +1,11 @@
 public class Main {
 
     public static void main(String[] args){
-        System.out.println("Hello world");
+        PasswordHardcoded passwordHardcoded = PasswordHardcoded.getInstance();
+
+        passwordHardcoded.addCredentials("John", "Doe");
+        passwordHardcoded.addCredentials("Jane", "Doe");
+
+        passwordHardcoded.getCredentials();
     }
 }
